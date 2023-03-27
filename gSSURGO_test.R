@@ -11,27 +11,39 @@ library(rnassqs)
 NASS_API_KEY <- "077FE359-11AC-32A2-A201-D7905A566F96"
 nassqs_auth(key = NASS_API_KEY)
 
+nc_sweetpotato_params <- list(commodity_desc = "SWEET POTATOES" ,
+                              state_alpha = "NC" ,
+                              agg_level_desc = "COUNTY" ,
+                              unit_desc = "ACRES" , 
+                              domain_desc = "TOTAL" , 
+                              statisticcat_desc = "AREA HARVESTED" , 
+                              prodn_practice_desc = "ALL PRODUCTION PRACTICES
+")
+nc_sweetpotato_data_raw <- nassqs(nc_sweetpotato_params)
+
 
 # Set the parameters for the data query
 state_abbr <- "CO"
-year <- 2017
+
 commodity <- "CROPS"
 group <- "PRACTICES"
 item <- "REDUCED TILL"
 domain <- "COUNTY"
 agg_level <- "FARM SIZE"
 
-# Query the NASS Quick Stats API for the data
-data <- nassqs(state_alpha = state_abbr,
-               year = year,
-               commodity_desc = commodity,
-               group_desc = group,
-               statisticcat_desc = item,
-               domain_desc = domain,
-               agg_level_desc = agg_level)
+# This doesnt work....Query the NASS Quick Stats API for the data
+data <- nassqs(state_alpha = "CO",
+               year__GE = 2012,
+               commodity_desc = "CROPS",
+               group_desc = "PRACTICES",
+               domain_desc = "COUNTY")
 
 # View the resulting data
 head(data)
+
+# This works...Parameters to query on and data call
+params <- list(commodity_desc = "CORN", year__GE = 2012, state_alpha = "VA")
+d <- nassqs(params)
 
 # Download soil data for the state of Colorado
 CO_soil <- get_nass_data('gSSURGO',
