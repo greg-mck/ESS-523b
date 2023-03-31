@@ -12,3 +12,5 @@ RawFarmsTab <- read.csv("Farms-tab.csv")
 FarmSize.clean <-  RawFarmsTab %>%
   dplyr::select(FIPS = FIPS,
                 AvgFarmSizeAcres = y17_M003_valueNumeric)
+
+write.csv(FarmSize.clean, file = "CleanFarmSizeByFipsData.csv", row.names = FALSE)
